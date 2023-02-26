@@ -1,0 +1,32 @@
+<h1 [hidden]="!websocketService.isConnected">connected <button (click)="websocketService.disconnect()">disconnect</button></h1>
+<h1 [hidden]="websocketService.isConnected">connect {{websocketService.isConnected}} <button (click)="websocketService.connect()">connect</button></h1>
+
+<form (ngSubmit)="websocketService.send()">
+  <input name="message" placeholder="Message" [(ngModel)]="websocketService.message" autofocus>
+  <button [disabled]="!websocketService.isConnected">Send</button>
+</form>
+<!-- <ul>
+  <li *ngFor="let msg of websocketService.msgs">{{msg}}</li>
+</ul>
+ -->
+<div>
+  -------------------------------------------------------------------------------------
+</div>
+
+<div>
+	<button class="start-button" *ngIf="!isRecording && !blobUrl" (click)="startRecording()">Start Recording</button>
+
+	<button class="stop-button" *ngIf="isRecording && !blobUrl" (click)="stopRecording()">Stop Recording</button>
+
+	<button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="clearRecordedData()">Clear Recording</button>
+
+	<br>
+	<button class="cancel-button" *ngIf="!isRecording && blobUrl" (click)="download()">Download Recording</button>
+
+	<div *ngIf="isRecording && !blobUrl"> {{recordedTime}} </div>
+	<div>
+		<audio *ngIf="!isRecording && blobUrl" controls>
+			<source [src]="blobUrl" type="audio/wav">
+		</audio>
+	</div>
+</div>
