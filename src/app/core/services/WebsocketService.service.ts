@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, Observer, Subject } from "rxjs";
+import { AudioRecordingService } from "./audio-recording.service";
+import { TextRecordService } from "./text_record.service";
 
 
 @Injectable({
@@ -13,23 +15,41 @@ export class WebsocketService {
   message!: any;
   msgs = [];
   
-  constructor() {}
+  /* private audioService:AudioRecordingService */
+  constructor(private text_recordService:TextRecordService,) {}
 
   send() {
-    //this.websocket.send(JSON.stringify({ message: this.message}));
     this.websocket.send(this.message);
-    //this.msgs.unshift(this.message);
-    //this.message = '';
   }
 
   receive(evt:any) {
     if(evt && evt.data) {
-      console.log('evt.data', evt.data);
-      let message = JSON.parse(evt.data);
-      //this.msgs.unshift(message.message);
+      let result = evt.data;
+      console.log('evt.data', result);
+      const obj = JSON.parse(result);
+
+      /* console.log('partial', obj.partial);
+      if(obj.partial){
+        var ret = obj.partial.replace('<UNK>','');
+        if(ret.length > 0){
+          this.text_recordService.updateText(ret)
+        }
+        */
+       
+        //let textResult = ResultArr.text;
+        //console.log('result', textResult);
+      if(obj.text){
+        var ret = obj.text.replace('<UNK>','');
+        if(ret.length > 0){
+          this.text_recordService.updateText(ret)
+        }
+      }
+   /*    let message = JSON.parse(evt.data);
+      this.msgs.unshift(); */
     }
   }
 
+  index = 1;
   connect() {
     let comp = this;
     this.websocket = new WebSocket('wss://asr-realtime.clearcypher.com/afow23csalp');

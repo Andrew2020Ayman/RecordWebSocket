@@ -1,10 +1,10 @@
 <h1 [hidden]="!websocketService.isConnected">connected <button (click)="websocketService.disconnect()">disconnect</button></h1>
 <h1 [hidden]="websocketService.isConnected">connect {{websocketService.isConnected}} <button (click)="websocketService.connect()">connect</button></h1>
 
-<form (ngSubmit)="websocketService.send()">
+<!-- <form (ngSubmit)="websocketService.send()">
   <input name="message" placeholder="Message" [(ngModel)]="websocketService.message" autofocus>
   <button [disabled]="!websocketService.isConnected">Send</button>
-</form>
+</form> -->
 <!-- <ul>
   <li *ngFor="let msg of websocketService.msgs">{{msg}}</li>
 </ul>
@@ -30,3 +30,12 @@
 		</audio>
 	</div>
 </div>
+<div>
+	-------------------------------------------------------------------------------------
+</div>
+
+
+<label for="exampleFormControlTextarea1"> records to text </label>
+<br>
+<textarea class="form-control" style="direction: rtl;"  id="exampleFormControlTextarea1" [(ngModel)]='current_Text' cols="80" rows="10"></textarea>
+
